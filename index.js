@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const dotenv = require('dotenv');
+dotenv.config({
+  path: './config/env/config.env',
+});
 const taskRepository = require('./app/repositories/taskRepository');
 const taskController = require('./app/controllers/taskController');
 const authController = require('./app/controllers/authController');
@@ -21,13 +24,9 @@ authController.mapRequestsToHandlers(app);
 taskController.mapRequestsToHandlers(app);
 
 // wrapped for testing
-const PROCESS_PORT = 5000;
-const SERVER_PORT = PROCESS_PORT || 5000;
-if (!module.parent) {
-  // staring the express server
-  app.listen(SERVER_PORT, function () {
-    console.log('Server is running at port :  ', SERVER_PORT);
-  });
-}
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`****server started ${PORT}****`);
+});
 
 module.exports = app;

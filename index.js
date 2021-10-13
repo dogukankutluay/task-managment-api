@@ -6,7 +6,6 @@ const taskRepository = require('./app/repositories/taskRepository');
 const taskController = require('./app/controllers/taskController');
 const authController = require('./app/controllers/authController');
 
-const SERVER_PORT = 5000;
 const app = express();
 
 // applying middlewares
@@ -22,9 +21,11 @@ authController.mapRequestsToHandlers(app);
 taskController.mapRequestsToHandlers(app);
 
 // wrapped for testing
+const PROCESS_PORT = 5000;
+const SERVER_PORT = PROCESS_PORT || 5000;
 if (!module.parent) {
   // staring the express server
-  app.listen(SERVER_PORT || 5000, function () {
+  app.listen(SERVER_PORT, function () {
     console.log('Server is running at port :  ', SERVER_PORT);
   });
 }
